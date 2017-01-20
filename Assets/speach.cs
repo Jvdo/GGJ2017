@@ -12,22 +12,18 @@ public class speach : MonoBehaviour
     public int samplerate = 11024;
 
     AudioSource aud;
+    int index = 0;
     void Start()
     {
-
-        aud = GetComponent<AudioSource>();
-        aud.clip = Microphone.Start("Built-in Microphone", true, 10, samplerate);
-        aud.loop = true; // Set the AudioClip to loop
-        //aud.mute = true; // Mute the sound, we don't want the player to hear it
-        while (!(Microphone.GetPosition(null) > 0)) { } // Wait until the recording has started
-        aud.Play(); // Play the audio source!
+        InvokeRepeating("StartRecording", 0, 10);
+        InvokeRepeating("GetFundamentalFrequency", 0, 1.0f / 4f);
     }
 
     void Update()
     {
         loudness = GetAveragedVolume() * sensitivity;
-        frequency = GetFundamentalFrequency();
-        print(frequency);
+        //frequency = GetFundamentalFrequency();
+        //print(frequency);
     }
 
     float GetAveragedVolume()
@@ -42,7 +38,21 @@ public class speach : MonoBehaviour
         return a / 256;
     }
 
-    float GetFundamentalFrequency()
+    IEnumerator StartRecording()
+    {
+        aud = GetComponents<AudioSource>()[index];
+        aud.clip = Microphone.Start("Built-in Microphone", false, 10, samplerate);
+        //aud.loop = true; // Set the AudioClip to loop
+        //aud.mute = true; // Mute the sound, we don't want the player to hear it
+        while (!(Microphone.GetPosition(null) > 0)) { } // Wait until the recording has started
+        aud.Play(); // Play the audio source!
+        index++;
+        if (index > 1)
+            index = 0;
+        return null;
+    }
+
+    IEnumerator GetFundamentalFrequency()
     {
         float fundamentalFrequency = 0.0f;
         int numberOfSamples = 8192/64;
@@ -59,7 +69,8 @@ public class speach : MonoBehaviour
             }
         }
         fundamentalFrequency = i * samplerate / numberOfSamples;
-        return fundamentalFrequency;
+        print(fundamentalFrequency);
+        return null;
     }
 
     //    AudioSource aud;
