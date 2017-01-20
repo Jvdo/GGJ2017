@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class speach : MonoBehaviour
 {
+    public float freqHight;
 
     public float sensitivity = 100.0f;
     public float loudness = 0.0f;
@@ -69,7 +70,7 @@ public class speach : MonoBehaviour
             }
         }
         fundamentalFrequency = i * samplerate / numberOfSamples;
-        print(fundamentalFrequency);
+        freqHight = fundamentalFrequency;
         return null;
     }
 
