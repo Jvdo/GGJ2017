@@ -12,7 +12,6 @@ public class characterMovement : MonoBehaviour
     float move;
     bool canMove = true;
 
-    public GameObject AudioObject;
     Vector3 SpawnPos;
 
     ParticleSystem pSystem;
