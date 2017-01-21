@@ -50,7 +50,10 @@ public class characterMovement : MonoBehaviour
 				foreach(var sprite in allSprites)
 				{
 					SpriteRenderer spriteRender = sprite as SpriteRenderer;
-					spriteRender.flipX = false;
+					if (!spriteRender.tag.Equals("Background"))
+					{
+						spriteRender.flipX = false;
+					}
 				}
 			}
 
@@ -59,7 +62,11 @@ public class characterMovement : MonoBehaviour
 				foreach(var sprite in allSprites)
 				{
 					SpriteRenderer spriteRender = sprite as SpriteRenderer;
-					spriteRender.flipX = true;
+					if (!spriteRender.tag.Equals("Background"))
+					{
+						spriteRender.flipX = true;
+					}
+
 				}
 			}
 
