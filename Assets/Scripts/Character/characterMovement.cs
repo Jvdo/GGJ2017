@@ -17,6 +17,11 @@ public class characterMovement : MonoBehaviour
     ParticleSystem pSystem;
 
     Component[] allSprites;
+
+    public AudioClip[] jumpClips;
+    public AudioClip[] deathClips;
+    public AudioClip collisionClip;
+    public AudioClip[] landClips;
     // Use this for initialization
     void Start()
     {
@@ -76,6 +81,8 @@ public class characterMovement : MonoBehaviour
             {
                 GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForce));
                 grounded = false;
+                int jumpSoundNumber = Random.Range(0, jumpClips.Length -1);
+                GetComponent<AudioSource>().PlayOneShot(jumpClips[jumpSoundNumber]);
             }
         }
     }
@@ -92,6 +99,9 @@ public class characterMovement : MonoBehaviour
         GetComponent<Rigidbody2D>().gravityScale = 0;
         GetComponent<BoxCollider2D>().enabled = false;
         pSystem.Emit(20);
+        int deathSoundNumber = Random.Range(0, deathClips.Length - 1);
+        GetComponent<AudioSource>().PlayOneShot(deathClips[deathSoundNumber]);
+
         foreach (SpriteRenderer sprity in allSprites)
         {
             sprity.enabled = false;
@@ -118,6 +128,19 @@ public class characterMovement : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D col)
     {
+        foreach(ContactPoint2D pointy in col.contacts) {
+            if (col.contacts[0].normal.y != 1.0f)
+            {
+                GetComponent<AudioSource>().PlayOneShot(collisionClip);
+                break;
+            }
+            else
+            {
+                int landSoundNumber = Random.Range(0, landClips.Length - 1);
+                GetComponent<AudioSource>().PlayOneShot(landClips[landSoundNumber]);
+            }
+
+        }
         Camera.main.GetComponent<ScreenShake>().SetShake(0.15f, 0.03f);
     }
 }
