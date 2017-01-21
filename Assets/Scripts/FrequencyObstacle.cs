@@ -25,9 +25,9 @@ public class FrequencyObstacle : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () 
+	void FixedUpdate () 
 	{
-		currentAnimTime += Time.deltaTime;
+		currentAnimTime += Time.fixedDeltaTime;
 
 		if (currentAnimTime >= animationTime)
 		{
