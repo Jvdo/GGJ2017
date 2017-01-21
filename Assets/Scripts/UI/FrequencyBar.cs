@@ -20,6 +20,8 @@ public class FrequencyBar : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		float factor = Mathf.InverseLerp(minFreq, maxFreq, speach.frequency);
-		foreground.fillAmount = Mathf.Clamp01(factor);
+        factor = Mathf.Clamp01(factor);
+        foreground.fillAmount = factor;
+        foreground.color = new Color32((byte)(factor * 255), 0, (byte)(255 - (factor * 255)), 255);
 	}
 }
