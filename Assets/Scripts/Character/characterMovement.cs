@@ -39,4 +39,14 @@ public class characterMovement : MonoBehaviour
             grounded = false;
         }
     }
+    public void Die()
+    {
+        StartCoroutine("RestartLevel");
+    }
+
+    IEnumerator RestartLevel()
+    {
+        yield return new WaitForSeconds(0.2f);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+    }
 }

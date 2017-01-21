@@ -21,6 +21,7 @@ public class Speach : MonoBehaviour
     int index = 0;
     void Start()
     {
+        aud = GetComponents<AudioSource>()[index];
         InvokeRepeating("StartRecording", 0, 10);
         InvokeRepeating("GetFundamentalFrequency", 0, 1.0f / 4f);
 
@@ -39,7 +40,10 @@ public class Speach : MonoBehaviour
 		if (inputValid)
 		{
 			frequency = Mathf.Lerp(frequency, frequencySample, 0.9f);
-		}
+        }else
+        {
+            frequency = Mathf.Lerp(frequency, 0, 0.9f);
+        }
     }
 
     float GetAveragedVolume()
@@ -81,6 +85,7 @@ public class Speach : MonoBehaviour
             if (s < data[j])
             {
                 s = data[j];
+                //print(s + " ---- " + j);
                 i = j;
             }
         }
