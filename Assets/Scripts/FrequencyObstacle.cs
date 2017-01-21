@@ -7,6 +7,7 @@ public class FrequencyObstacle : MonoBehaviour {
 	Speach speach;
 
 	public FrequencyObstacleTarget target;
+	public TextMesh textMesh;
 	Vector3 startPos;
 	Vector3 endPos;
 
@@ -25,6 +26,8 @@ public class FrequencyObstacle : MonoBehaviour {
 
 		startPos = transform.localPosition;
 		endPos = transform.localPosition + target.transform.position - transform.position;
+
+		textMesh.text = string.Format("{0} - {1}", targetFrequencyMin, targetFrequencyMax);
 	}
 	
 	// Update is called once per frame

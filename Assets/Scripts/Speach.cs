@@ -12,7 +12,9 @@ public class Speach : MonoBehaviour
     public float frequency = 0.0f;
     public int samplerate = 11024;
 	public float loudnessThreshold = 0.1f;
+	public float bucketThreshold = 0.0005f;
 	bool inputValid;
+	bool bucketValid;
 	float frequencySample;
 
 	string microphoneName;
@@ -75,18 +77,23 @@ public class Speach : MonoBehaviour
     IEnumerator GetFundamentalFrequency()
     {
         float fundamentalFrequency = 0.0f;
-        int numberOfSamples = 8192/64;
+		int numberOfSamples = 128;//8192/64;
         float[] data = new float[numberOfSamples];
         aud.GetSpectrumData(data, 0, FFTWindow.BlackmanHarris);
         float s = 0.0f;
         int i = 0;
+
+		bucketValid = false;
+
         for (int j = 1; j < numberOfSamples; j++)
         {
-            if (s < data[j])
+			if (s < data[j] && data[j] >= bucketThreshold)
             {
                 s = data[j];
                 //print(s + " ---- " + j);
                 i = j;
+				print(data[j]);
+				bucketValid = true;
             }
         }
         fundamentalFrequency = i * samplerate / numberOfSamples;
@@ -123,5 +130,5 @@ public class Speach : MonoBehaviour
     //        return fundamentalFrequency;
     //    }
 
-	public bool IsInputValid() { return inputValid; }
+	public bool IsInputValid() { return inputValid && bucketValid; }
 }
