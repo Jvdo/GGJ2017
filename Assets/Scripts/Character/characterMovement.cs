@@ -32,25 +32,30 @@ public class characterMovement : MonoBehaviour
         if (canMove)
         {
             move = Input.GetAxis("Horizontal");
-            //if (Input.GetKey("left"))
-            //{
-            //    move = -1;
-            //}
 
-            //if (Input.GetKey("right"))
-            //{
-            //    move = 1;
-            //}
+            if (Input.GetKey("left"))
+            {
+                move -= 1f;
+            }
+
+            if (Input.GetKey("right"))
+            {
+                move += 1f;
+            }
+
+            move = Mathf.Clamp(move, -1f, 1f);
+
             GetComponent<Rigidbody2D>().velocity = new Vector2(move * maxMovespeed, GetComponent<Rigidbody2D>().velocity.y);
             move *= 0.3f;
-
-            if (grounded && Input.GetButton("Fire1") && GetComponent<Rigidbody2D>().velocity.y == 0)
+            if (GetComponent<Rigidbody2D>().velocity.y > 1) { grounded = false; }
+            if (grounded && (Input.GetButton("Fire1") || Input.GetKey("up"))&& GetComponent<Rigidbody2D>().velocity.y < 1)
             {
                 GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForce));
                 grounded = false;
             }
         }
     }
+
     public void Die()
     {
         canMove = false;
@@ -60,13 +65,14 @@ public class characterMovement : MonoBehaviour
 
     IEnumerator Respawn()
     {
+        GetComponent<Rigidbody2D>().gravityScale = 0;
         pSystem.Emit(20);
         foreach (SpriteRenderer sprity in allSprites)
         {
             sprity.enabled = false;
         }
         yield return new WaitForSeconds(2f);
-
+        GetComponent<Rigidbody2D>().gravityScale = 2;
         transform.position = SpawnPos;
 
         foreach (SpriteRenderer sprity in allSprites)
@@ -86,6 +92,6 @@ public class characterMovement : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D col)
     {
-                Camera.main.GetComponent<ScreenShake>().SetShake(0.15f, 0.03f);
+        Camera.main.GetComponent<ScreenShake>().SetShake(0.15f, 0.03f);
     }
 }

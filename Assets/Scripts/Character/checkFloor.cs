@@ -13,7 +13,8 @@ public class checkFloor : MonoBehaviour
     }
     void OnTriggerStay2D(Collider2D coll)
     {
-        GetComponentInParent<characterMovement>().grounded = true;
+        if (!coll.isTrigger)
+            GetComponentInParent<characterMovement>().grounded = true;
     }
 
     void OnTriggerExit2D(Collider2D coll)
