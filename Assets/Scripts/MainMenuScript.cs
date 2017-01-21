@@ -9,10 +9,15 @@ public class MainMenuScript : MonoBehaviour {
     {
         SceneManager.LoadScene("Level 1");
     }
+    public void LevelSelect()
+    {
+        SceneManager.LoadScene("Level Select");
+    }
     public void Options()
     {
-        SceneManager.LoadScene("Options");
+        SceneManager.LoadScene("Credits");
     }
+
     public void Quit()
     {
         Application.Quit();

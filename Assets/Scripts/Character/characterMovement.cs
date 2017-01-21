@@ -66,6 +66,7 @@ public class characterMovement : MonoBehaviour
     IEnumerator Respawn()
     {
         GetComponent<Rigidbody2D>().gravityScale = 0;
+        GetComponent<BoxCollider2D>().enabled = false;
         pSystem.Emit(20);
         foreach (SpriteRenderer sprity in allSprites)
         {
@@ -73,6 +74,7 @@ public class characterMovement : MonoBehaviour
         }
         yield return new WaitForSeconds(2f);
         GetComponent<Rigidbody2D>().gravityScale = 2;
+        GetComponent<BoxCollider2D>().enabled = true;
         transform.position = SpawnPos;
 
         foreach (SpriteRenderer sprity in allSprites)
