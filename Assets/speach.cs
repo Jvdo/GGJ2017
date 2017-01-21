@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
-public class speach : MonoBehaviour
+public class Speach : MonoBehaviour
 {
     public float freqHight;
 
@@ -12,12 +12,17 @@ public class speach : MonoBehaviour
     public float frequency = 0.0f;
     public int samplerate = 11024;
 
+	string microphoneName;
+
     AudioSource aud;
     int index = 0;
     void Start()
     {
         InvokeRepeating("StartRecording", 0, 10);
         InvokeRepeating("GetFundamentalFrequency", 0, 1.0f / 4f);
+
+		microphoneName = Microphone.devices[0];
+		print("microphone: "+microphoneName);
     }
 
     void Update()
@@ -42,7 +47,7 @@ public class speach : MonoBehaviour
     IEnumerator StartRecording()
     {
         aud = GetComponents<AudioSource>()[index];
-        aud.clip = Microphone.Start("Built-in Microphone", false, 10, samplerate);
+		aud.clip = Microphone.Start(microphoneName, false, 10, samplerate);
         //aud.loop = true; // Set the AudioClip to loop
         //aud.mute = true; // Mute the sound, we don't want the player to hear it
         while (!(Microphone.GetPosition(null) > 0)) { } // Wait until the recording has started
