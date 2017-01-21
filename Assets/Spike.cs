@@ -9,6 +9,7 @@ public class Spike : MonoBehaviour
         if (coll.tag == "Player")
         {
             coll.GetComponent<characterMovement>().Die();
+            Camera.main.GetComponent<ScreenShake>().SetShake(0.4f, 0.2f);
         }
     }
 }

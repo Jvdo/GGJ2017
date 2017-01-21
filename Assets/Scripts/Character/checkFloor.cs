@@ -7,6 +7,7 @@ public class checkFloor : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D coll)
     {
+        //Camera.main.GetComponent<ScreenShake>().SetShake(0.15f, 0.03f);
         if (coll.tag == "MovingPlatform")
             transform.parent.parent = coll.transform;
     }
