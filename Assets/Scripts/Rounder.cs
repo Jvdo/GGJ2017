@@ -5,7 +5,7 @@ using UnityEngine;
 public class Rounder : MonoBehaviour {
 
     Speach speach;
-    float targetFrequencyMin = 200;
+    public float targetFrequencyMin = 500;
     characterMovement player;
     public bool clockwise;
     // Use this for initialization
