@@ -44,6 +44,24 @@ public class characterMovement : MonoBehaviour
 
             move = Mathf.Clamp(move, -1f, 1f);
 
+			if (move > 0.01f)
+			{
+				foreach(var sprite in allSprites)
+				{
+					SpriteRenderer spriteRender = sprite as SpriteRenderer;
+					spriteRender.flipX = false;
+				}
+			}
+
+			if (move < -0.01f)
+			{
+				foreach(var sprite in allSprites)
+				{
+					SpriteRenderer spriteRender = sprite as SpriteRenderer;
+					spriteRender.flipX = true;
+				}
+			}
+
             GetComponent<Rigidbody2D>().velocity = new Vector2(move * maxMovespeed, GetComponent<Rigidbody2D>().velocity.y);
             move *= 0.3f;
             if (GetComponent<Rigidbody2D>().velocity.y > 1) { grounded = false; }
