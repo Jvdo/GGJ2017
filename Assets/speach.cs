@@ -11,6 +11,7 @@ public class Speach : MonoBehaviour
     public float loudness = 0.0f;
     public float frequency = 0.0f;
     public int samplerate = 11024;
+	public float loudnessThreshold = 0.1f;
 
 	string microphoneName;
 
@@ -28,8 +29,20 @@ public class Speach : MonoBehaviour
     void Update()
     {
         loudness = GetAveragedVolume() * sensitivity;
-        //frequency = GetFundamentalFrequency();
+      	//frequency = GetFundamentalFrequency();
         //print(frequency);
+
+		if(Input.GetKeyDown(KeyCode.Q))
+		{
+			print("start record");
+			aud.clip = Microphone.Start(null, true, 10, 44100);
+		}
+		if(Input.GetKeyDown(KeyCode.W))
+		{
+			print("End start record");
+			Microphone.End(null);
+			aud.Play(); // Play the audio source!
+		}
     }
 
     float GetAveragedVolume()
@@ -76,6 +89,10 @@ public class Speach : MonoBehaviour
         }
         fundamentalFrequency = i * samplerate / numberOfSamples;
         freqHight = fundamentalFrequency;
+		if (fundamentalFrequency != 5512 && loudness >= loudnessThreshold)
+		{
+			frequency = fundamentalFrequency;
+		}
         return null;
     }
 
