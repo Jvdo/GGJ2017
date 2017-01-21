@@ -92,7 +92,7 @@ public class Speach : MonoBehaviour
                 s = data[j];
                 //print(s + " ---- " + j);
                 i = j;
-				print(data[j]);
+				//print(data[j]);
 				bucketValid = true;
             }
         }

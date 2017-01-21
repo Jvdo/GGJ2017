@@ -9,8 +9,6 @@ public class checkFloor : MonoBehaviour
     {
         if (coll.tag == "MovingPlatform")
             transform.parent.parent = coll.transform;
-        //else
-        //    transform.parent.parent = coll.transform.parent;
     }
     void OnTriggerStay2D(Collider2D coll)
     {
