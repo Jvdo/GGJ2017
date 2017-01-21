@@ -19,6 +19,9 @@ public class Speach : MonoBehaviour
 
 	string microphoneName;
 
+	public float minFrequency = 120.0f;
+	public float maxFrequency = 1500.0f;
+
     AudioSource aud;
     int index = 0;
     void Start()
@@ -38,15 +41,20 @@ public class Speach : MonoBehaviour
         //print(freqHight);
 
 		inputValid = loudness >= loudnessThreshold;
+    }
 
+	void FixedUpdate()
+	{
+		const float strength = 0.1f;
 		if (inputValid)
 		{
-			frequency = Mathf.Lerp(frequency, frequencySample, 0.9f);
-        }else
-        {
-            frequency = Mathf.Lerp(frequency, 0, 0.9f);
-        }
-    }
+			frequency = Mathf.Lerp(frequency, frequencySample, strength);
+		}
+		else
+		{
+			frequency = Mathf.Lerp(frequency, 0f, strength);
+		}
+	}
 
     float GetAveragedVolume()
     {
@@ -77,7 +85,7 @@ public class Speach : MonoBehaviour
     IEnumerator GetFundamentalFrequency()
     {
         float fundamentalFrequency = 0.0f;
-		int numberOfSamples = 128;//8192/64;
+		int numberOfSamples = 256;//8192/64;
         float[] data = new float[numberOfSamples];
         aud.GetSpectrumData(data, 0, FFTWindow.BlackmanHarris);
         float s = 0.0f;
@@ -87,14 +95,18 @@ public class Speach : MonoBehaviour
 
         for (int j = 1; j < numberOfSamples; j++)
         {
-			if (s < data[j] && data[j] >= bucketThreshold)
-            {
-                s = data[j];
-                //print(s + " ---- " + j);
-                i = j;
-				//print(data[j]);
-				bucketValid = true;
-            }
+			float bucketFreq = j * samplerate / numberOfSamples;
+			if (bucketFreq >= minFrequency && bucketFreq <= maxFrequency)
+			{
+				if (s < data[j] && data[j] >= bucketThreshold)
+	            {
+	                s = data[j];
+	                //print(s + " ---- " + j);
+	                i = j;
+					//print(data[j]);
+					bucketValid = true;
+	            }
+			}
         }
         fundamentalFrequency = i * samplerate / numberOfSamples;
         freqHight = fundamentalFrequency;
