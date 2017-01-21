@@ -27,14 +27,8 @@ public class FrequencyObstacle : MonoBehaviour {
 		startPos = transform.localPosition;
 		endPos = transform.localPosition + target.transform.position - transform.position;
 
-		if (targetFrequencyMin == 0.0f && targetFrequencyMax == 0.0f)
-		{
-			textMesh.text = string.Empty;
-		}
-		else
-		{
-			textMesh.text = string.Format("{0} - {1}", targetFrequencyMin, targetFrequencyMax);
-		}
+
+		textMesh.text = string.Empty;
 	}
 	
 	// Update is called once per frame
