@@ -5,8 +5,9 @@ using UnityEngine;
 public class Rounder : MonoBehaviour {
 
     Speach speach;
-    public float targetFrequencyMin;
+    float targetFrequencyMin = 200;
     characterMovement player;
+    public bool clockwise;
     // Use this for initialization
     void Start () {
         speach = FindObjectOfType<Speach>();
@@ -19,6 +20,8 @@ public class Rounder : MonoBehaviour {
         {
             float toRotate = Mathf.Clamp(speach.frequency, 200, 1000);
             toRotate /= 250;
+            if (clockwise)
+                toRotate *= -1;
             transform.Rotate(0, 0, toRotate);
         }
 	}
