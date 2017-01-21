@@ -9,13 +9,17 @@ public class FrequencyBar : MonoBehaviour {
 
 	public Image foreground;
 
+	public float maxFreq = 1000.0f;
+	public float minFreq = 200.0f;
+
 	// Use this for initialization
 	void Start () {
 		speach = FindObjectOfType<Speach>();
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-		foreground.fillAmount = Mathf.Clamp01(speach.freqHight/50.0f);
+		float factor = Mathf.InverseLerp(minFreq, maxFreq, speach.frequency);
+		foreground.fillAmount = Mathf.Clamp01(factor);
 	}
 }
