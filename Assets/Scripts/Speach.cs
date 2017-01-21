@@ -12,6 +12,8 @@ public class Speach : MonoBehaviour
     public float frequency = 0.0f;
     public int samplerate = 11024;
 	public float loudnessThreshold = 0.1f;
+	bool inputValid;
+	float frequencySample;
 
 	string microphoneName;
 
@@ -31,6 +33,13 @@ public class Speach : MonoBehaviour
         loudness = GetAveragedVolume() * sensitivity;
         //frequency = GetFundamentalFrequency();
         //print(freqHight);
+
+		inputValid = loudness >= loudnessThreshold;
+
+		if (inputValid)
+		{
+			frequency = Mathf.Lerp(frequency, frequencySample, 0.9f);
+		}
     }
 
     float GetAveragedVolume()
@@ -78,9 +87,9 @@ public class Speach : MonoBehaviour
         fundamentalFrequency = i * samplerate / numberOfSamples;
         freqHight = fundamentalFrequency;
 
-		if (fundamentalFrequency != 5512 && loudness >= loudnessThreshold)
+		if (fundamentalFrequency != 5512 && inputValid)
 		{
-			frequency = fundamentalFrequency;
+			frequencySample = fundamentalFrequency;
 		}
 
         return null;
@@ -108,4 +117,6 @@ public class Speach : MonoBehaviour
     //        aud.GetSpectrumData(data, aud.clip.channels, FFTWindow.BlackmanHarris);
     //        return fundamentalFrequency;
     //    }
+
+	public bool IsInputValid() { return inputValid; }
 }
