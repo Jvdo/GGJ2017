@@ -24,7 +24,7 @@ public class speach : MonoBehaviour
     {
         loudness = GetAveragedVolume() * sensitivity;
         //frequency = GetFundamentalFrequency();
-        //print(frequency);
+        //print(freqHight);
     }
 
     float GetAveragedVolume()
