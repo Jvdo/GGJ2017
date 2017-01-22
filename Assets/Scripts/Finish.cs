@@ -18,6 +18,7 @@ public class Finish : MonoBehaviour {
     {
 		if (coll.tag == "Player" && !finished)
         {
+			GetComponent<AudioSource>().Play();
 			finished = true;
 			StartCoroutine(GoToNextLevelRoutine());
         }
