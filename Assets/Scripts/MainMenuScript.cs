@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuScript : MonoBehaviour {
 
+    public AudioClip hoverClip;
+
     public void StartGame()
     {
         SceneManager.LoadScene("Level 1");
@@ -21,5 +23,10 @@ public class MainMenuScript : MonoBehaviour {
     public void Quit()
     {
         Application.Quit();
+    }
+
+    public void HoverSound()
+    {
+        GetComponent<AudioSource>().PlayOneShot(hoverClip);
     }
 }
