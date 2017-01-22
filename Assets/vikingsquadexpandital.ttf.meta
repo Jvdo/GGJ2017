@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 9caa696e469d5f9459195f99baae0c5c
+timeCreated: 1485085518
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Viking Squad Expanded Italic
+  fontNames:
+  - Viking Squad Expanded Italic
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
