@@ -23,6 +23,7 @@ public class CheckPoint : MonoBehaviour
             GetComponentsInChildren<SpriteRenderer>()[1].sprite = green;
             GetComponent<BoxCollider2D>().enabled = false;
 			pSystem.Play();
+            GetComponent<AudioSource>().Play();
         }
     }
 }
