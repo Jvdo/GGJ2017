@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LevelSelection : MonoBehaviour {
 
@@ -18,5 +19,10 @@ public class LevelSelection : MonoBehaviour {
     public void PickLevel(string level)
     {
         SceneManager.LoadScene("Level " + level);
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }
