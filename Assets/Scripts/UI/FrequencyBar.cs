@@ -22,6 +22,5 @@ public class FrequencyBar : MonoBehaviour {
 		float factor = Mathf.InverseLerp(minFreq, maxFreq, speach.frequency);
         factor = Mathf.Clamp01(factor);
         foreground.fillAmount = factor;
-        foreground.color = new Color32((byte)(factor * 255), 0, (byte)(255 - (factor * 255)), 255);
 	}
 }

@@ -115,7 +115,7 @@ public class characterMovement : MonoBehaviour
         {
             sprity.enabled = true;
         }
-        pSystem.Emit(20);
+        //pSystem.Emit(20);
 
         yield return new WaitForSeconds(0.2f);
         canMove = true;
