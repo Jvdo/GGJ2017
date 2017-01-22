@@ -22,6 +22,7 @@ public class characterMovement : MonoBehaviour
     public AudioClip[] deathClips;
     public AudioClip collisionClip;
     public AudioClip[] landClips;
+    public AudioClip[] moveClips;
 
     Animator animator;
     // Use this for initialization
@@ -82,6 +83,16 @@ public class characterMovement : MonoBehaviour
                         spriteRender.flipX = true;
                     }
 
+                }
+            }
+
+            if (move != 0f && grounded)
+            {
+                if (!GetComponents<AudioSource>()[1].isPlaying)
+                {
+                    int moveSoundNumber = Random.Range(0, moveClips.Length - 1);
+                    GetComponents<AudioSource>()[1].clip = moveClips[moveSoundNumber];
+                    GetComponents<AudioSource>()[1].Play();
                 }
             }
 

@@ -18,11 +18,13 @@ public class FrequencyObstacle : MonoBehaviour {
 
 	public float targetFrequencyMin = 0.0f;
 	public float targetFrequencyMax = 0.0f;
+    GameObject player;
 
 	// Use this for initialization
 	void Start () {
 		speach = FindObjectOfType<Speach>();
-		target = transform.GetComponentInChildren<FrequencyObstacleTarget>();
+        player = FindObjectOfType<characterMovement>().gameObject;
+        target = transform.GetComponentInChildren<FrequencyObstacleTarget>();
 
 		startPos = transform.localPosition;
 		endPos = transform.localPosition + target.transform.position - transform.position;
@@ -34,7 +36,14 @@ public class FrequencyObstacle : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if (targetFrequencyMin == 0.0f && targetFrequencyMax == 0.0f)
+        if (GetComponent<AudioSource>())
+        {
+            if (Vector2.Distance(transform.position, player.transform.position) < 10)
+                GetComponent<AudioSource>().mute = false;
+            else
+                GetComponent<AudioSource>().mute = true;
+        }
+        if (targetFrequencyMin == 0.0f && targetFrequencyMax == 0.0f)
 		{
 			currentAnimTime += Time.deltaTime;
 
