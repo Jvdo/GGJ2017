@@ -9,7 +9,7 @@ public class Credits : MonoBehaviour {
 	public float totalTranslation = 2000.0f;
 	public float totalTime = 14.0f;
 
-	float currentTime = 0.0f;
+	float currentTime = -0.5f;
 
 	// Use this for initialization
 	void Start () {
