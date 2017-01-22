@@ -120,6 +120,12 @@ public class characterMovement : MonoBehaviour
         StartCoroutine("Respawn");
     }
 
+	public void EndLevel()
+	{
+		canMove = false;
+		GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+	}
+
     IEnumerator Respawn()
     {
         GetComponent<Rigidbody2D>().gravityScale = 0;

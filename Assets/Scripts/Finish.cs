@@ -5,11 +5,31 @@ using UnityEngine.SceneManagement;
 
 public class Finish : MonoBehaviour {
 
+	bool finished = false;
+
+	characterMovement player;
+
+	void Start()
+	{
+		player = FindObjectOfType<characterMovement>();
+	}
+
     void OnTriggerEnter2D(Collider2D coll)
     {
-        if (coll.tag == "Player")
+		if (coll.tag == "Player" && !finished)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+			finished = true;
+			StartCoroutine(GoToNextLevelRoutine());
         }
     }
+
+	IEnumerator GoToNextLevelRoutine()
+	{
+		if (player)
+		{
+			player.EndLevel();
+		}
+		yield return new WaitForSeconds(2.0f);
+		SceneManager.LoadScene("Level Select");
+	}
 }
