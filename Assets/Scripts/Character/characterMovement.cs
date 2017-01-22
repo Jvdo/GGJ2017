@@ -22,12 +22,15 @@ public class characterMovement : MonoBehaviour
     public AudioClip[] deathClips;
     public AudioClip collisionClip;
     public AudioClip[] landClips;
+
+    Animator animator;
     // Use this for initialization
     void Start()
     {
         SpawnPos = transform.position;
         pSystem = GetComponentInChildren<ParticleSystem>();
         allSprites = GetComponentsInChildren<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -48,42 +51,54 @@ public class characterMovement : MonoBehaviour
             }
 
             move = Mathf.Clamp(move, -1f, 1f);
+            if (move != 0)
+                animator.SetBool("moving", true);
+            else
+                animator.SetBool("moving", false);
+            if(grounded)
+                animator.SetBool("jumping", false);
+            else
+                animator.SetBool("jumping", true);
 
-			if (move > 0.01f)
-			{
-				foreach(var sprite in allSprites)
-				{
-					SpriteRenderer spriteRender = sprite as SpriteRenderer;
-					if (!spriteRender.tag.Equals("Background"))
-					{
-						spriteRender.flipX = false;
-					}
-				}
-			}
+            if (move > 0.01f)
+            {
+                foreach (var sprite in allSprites)
+                {
+                    SpriteRenderer spriteRender = sprite as SpriteRenderer;
+                    if (!spriteRender.tag.Equals("Background"))
+                    {
+                        spriteRender.flipX = false;
+                    }
+                }
+            }
 
-			if (move < -0.01f)
-			{
-				foreach(var sprite in allSprites)
-				{
-					SpriteRenderer spriteRender = sprite as SpriteRenderer;
-					if (!spriteRender.tag.Equals("Background"))
-					{
-						spriteRender.flipX = true;
-					}
+            if (move < -0.01f)
+            {
+                foreach (var sprite in allSprites)
+                {
+                    SpriteRenderer spriteRender = sprite as SpriteRenderer;
+                    if (!spriteRender.tag.Equals("Background"))
+                    {
+                        spriteRender.flipX = true;
+                    }
 
-				}
-			}
+                }
+            }
 
             GetComponent<Rigidbody2D>().velocity = new Vector2(move * maxMovespeed, GetComponent<Rigidbody2D>().velocity.y);
             move *= 0.3f;
             if (GetComponent<Rigidbody2D>().velocity.y > 1) { grounded = false; }
-            if (grounded && (Input.GetButton("Fire1") || Input.GetKey("up"))&& GetComponent<Rigidbody2D>().velocity.y < 1)
+            if (grounded && (Input.GetButton("Fire1") || Input.GetKey("up")) && GetComponent<Rigidbody2D>().velocity.y < 1)
             {
                 GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForce));
                 grounded = false;
-                int jumpSoundNumber = Random.Range(0, jumpClips.Length -1);
+                int jumpSoundNumber = Random.Range(0, jumpClips.Length - 1);
                 GetComponent<AudioSource>().PlayOneShot(jumpClips[jumpSoundNumber]);
             }
+        }
+        if (Input.GetButton("Cancel"))
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Level Select");
         }
     }
 
@@ -128,7 +143,8 @@ public class characterMovement : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D col)
     {
-        foreach(ContactPoint2D pointy in col.contacts) {
+        foreach (ContactPoint2D pointy in col.contacts)
+        {
             if (col.contacts[0].normal.y != 1.0f)
             {
                 GetComponent<AudioSource>().PlayOneShot(collisionClip);
