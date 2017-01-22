@@ -22,7 +22,7 @@ public class CheckPoint : MonoBehaviour
             coll.GetComponent<characterMovement>().SetSpawnPos(transform.position);
             GetComponentsInChildren<SpriteRenderer>()[1].sprite = green;
             GetComponent<BoxCollider2D>().enabled = false;
-            pSystem.Emit(20);
+			pSystem.Play();
         }
     }
 }
